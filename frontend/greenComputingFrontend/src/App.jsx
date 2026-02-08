@@ -73,6 +73,17 @@ export default function App() {
           <p>Energy: {result.energy_kwh} kWh</p>
           <p>Carbon: {result.carbon_kg} kg CO₂</p>
           <p>Green Score: {result.green_score}</p>
+
+          {result.suggestions && (
+            <div style={{ marginTop: 15 }}>
+              <h4>Suggestions to Improve</h4>
+              <ul>
+                {result.suggestions.map((s, i) => (
+                  <li key={i}>{s}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       )}
     </div>
