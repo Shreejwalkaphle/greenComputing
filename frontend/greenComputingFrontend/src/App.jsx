@@ -9,6 +9,13 @@ export default function App() {
   });
 
   const [result, setResult] = useState(null);
+  const [history, setHistory] = useState([]);
+
+  const fetchHistory = async () => {
+    const response = await fetch("http://127.0.0.1:8000/history");
+    const data = await response.json();
+    setHistory(data);
+  };
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -66,6 +73,9 @@ export default function App() {
       </div>
 
       <button onClick={submitForm}>Evaluate</button>
+      <button onClick={fetchHistory} style={{ marginLeft: 10 }}>
+        View History
+      </button>
 
       {result && (
         <div style={{ marginTop: 20 }}>
@@ -84,6 +94,19 @@ export default function App() {
               </ul>
             </div>
           )}
+        </div>
+      )}
+      {history.length > 0 && (
+        <div style={{ marginTop: 30 }}>
+          <h3>Past Evaluations</h3>
+          <ul>
+            {history.map((h, i) => (
+              <li key={i}>
+                {h.hardware} | {h.devices} devices | {h.hours} hrs | {h.country}{" "}
+                → Score: {h.green_score}
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
